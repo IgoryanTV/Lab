@@ -5,21 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab"
         xmlns:res="clr-namespace:Lab.Resources"
+        xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
         mc:Ignorable="d"
-        Title="EmployeeWindow" Height="300" Width="400"
+        Title="EmployeeWindow" Height="420" Width="400"
         ResizeMode="CanMinimize">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -27,34 +27,48 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Фамилия" Margin="10,0,0,0"/>
-        <TextBlock Text="Имя" Grid.Row="1" Margin="10,0,0,0"/>
-        <TextBlock Text="Отчество" Grid.Row="2" Margin="10,0,0,0"/>
-        <TextBlock Text="Пол" Grid.Row="3" Margin="10,0,0,0"/>
-        <TextBlock Text="Возраст" Grid.Row="4" Margin="10,0,0,0"/>
-        <TextBlock Text="Семейное положение" Grid.Row="5" Margin="10,0,0,0"/>
-        <TextBlock Text="Имеет детей" Grid.Row="6" Margin="10,0,0,0"/>
-        <TextBlock Text="Профессия" Grid.Row="7" Margin="10,0,0,0"/>
-        <TextBlock Text="Ученая степень" Grid.Row="8" Margin="10,0,0,0"/>
-        <TextBlock Text="Дата рождения" Grid.Row="9" Margin="10,0,0,0"/>
+        <CheckBox x:Name="hasMiddleName_CheckBox" 
+                  Checked="hasMiddleName_CheckBox_Checked" 
+                  Unchecked="hasMiddleName_CheckBox_Unchecked" 
+                  Content="Есть отчество?" 
+                  Grid.Row="9" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-        <TextBox Text="{Binding LastName}" Grid.Column="1" Margin="10,0,10,0" />
-        <TextBox Text="{Binding FirstName}" Grid.Row="1" Grid.Column="1" Margin="10,0,10,0"/>
-        <TextBox Text="{Binding MiddleName}" Grid.Row="2" Grid.Column="1" Margin="10,0,10,0"/>
-        <ComboBox x:Name="sexComboBox" SelectedItem="{Binding Sex}" ItemsSource="{Binding Sex}" Grid.Row="3" Grid.Column="1" Margin="10,0,10,0"/>
-        <TextBox Text="{Binding Age}" Grid.Row="4" Grid.Column="1" Margin="10,0,10,0"/>
-        <ComboBox x:Name="familyComboBox" SelectedItem="{Binding FamilyStatus}" ItemsSource="{Binding FamilyStatus}" Grid.Row="5" Grid.Column="1" Margin="10,0,10,0"/>
-        <ComboBox x:Name="childrenComboBox" SelectedItem="{Binding HasChildren}" ItemsSource="{Binding HasChildren}" Grid.Row="6" Grid.Column="1" Margin="10,0,10,0"/>
-        <TextBox Text="{Binding Job}" Grid.Row="7" Grid.Column="1" Margin="10,0,10,0"/>
-        <TextBox Text="{Binding Degree}" Grid.Row="8" Grid.Column="1" Margin="10,0,10,0"/>
-        <DatePicker  x:Name="datePicker" Text="{Binding Date}" Grid.Row="9" Grid.Column="1" Margin="10,0,10,0" FirstDayOfWeek="Monday" SelectedDateFormat="Short"/>
+        <TextBlock Text="Фамилия" Margin="10,0,0,0" VerticalAlignment="Center"/>
+        <TextBlock Text="Имя" Grid.Row="1" Margin="10,0,0,0" VerticalAlignment="Center"/>
+        <TextBlock Text="Отчество" Grid.Row="2" Margin="10,0,0,0" VerticalAlignment="Center"/>
+        <TextBlock Text="Пол" Grid.Row="3" Margin="10,0,0,0" VerticalAlignment="Center"/>
+        <TextBlock Text="Семейное положение" Grid.Row="4" Margin="10,0,0,0" VerticalAlignment="Center"/>
+        <TextBlock Text="Имеет детей" Grid.Row="5" Margin="10,0,0,0" VerticalAlignment="Center"/>
+        <TextBlock Text="Профессия" Grid.Row="6" Margin="10,0,0,0" VerticalAlignment="Center"/>
+        <TextBlock Text="Ученая степень" Grid.Row="7" Margin="10,0,0,0" VerticalAlignment="Center"/>
+        <TextBlock Text="Дата рождения" Grid.Row="8" Margin="10,0,0,0" VerticalAlignment="Center"/>
+
+        <StackPanel Grid.Row="0" Grid.Column="1">
+            <TextBox TextChanged="lastNameText_TextChanged" x:Name="lastNameText" Text="{Binding LastName}" Margin="10,0,10,0" Height="20"/>
+            <TextBlock x:Name="lastNameTextBlock" Margin="10,0,10,0" Text="Введите корректное значение" FontSize="10" Foreground="#FFF51111" Visibility="Hidden"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <TextBox TextChanged="firstNameText_TextChanged" x:Name="firstNameText" Text="{Binding FirstName}" Margin="10,0,10,0" Height="20"/>
+            <TextBlock x:Name="firstNameTextBlock" Margin="10,0,10,0" Text="Введите корректное значение" FontSize="10" Foreground="#FFF51111" Visibility="Hidden"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="1">
+            <TextBox IsEnabled="False" TextChanged="middleNameText_TextChanged" x:Name="middleNameText" Text="{Binding MiddleName}" Margin="10,0,10,0" Height="20"/>
+            <TextBlock x:Name="middleNameTextBlock" Margin="10,0,10,0" Text="Введите корректное значение" FontSize="10" Foreground="#FFF51111" Visibility="Hidden"/>
+        </StackPanel>
+
+        <ComboBox x:Name="sexComboBox" SelectedItem="{Binding Sex}" ItemsSource="{Binding Sex}" Grid.Row="3" Grid.Column="1" Margin="10,0,10,0" VerticalAlignment="Center"/>
+        <ComboBox x:Name="familyComboBox" SelectedItem="{Binding FamilyStatus}" ItemsSource="{Binding FamilyStatus}" Grid.Row="4" Grid.Column="1" Margin="10,0,10,0" VerticalAlignment="Center"/>
+        <ComboBox x:Name="childrenComboBox" SelectedItem="{Binding HasChildren}" ItemsSource="{Binding HasChildren}" Grid.Row="5" Grid.Column="1" Margin="10,0,10,0" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding Job}" Grid.Row="6" Grid.Column="1" Margin="10,0,10,0" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding Degree}" Grid.Row="7" Grid.Column="1" Margin="10,0,10,0" VerticalAlignment="Center"/>
+        <DatePicker  x:Name="datePicker" Text="{Binding Date}" Grid.Row="8" Grid.Column="1" Margin="10,0,10,0" FirstDayOfWeek="Monday" SelectedDateFormat="Short" VerticalAlignment="Center"/>
 
         <StackPanel HorizontalAlignment="Center"
                     Orientation="Horizontal"
-                    Grid.Row="10"
+                    Grid.Row="9"
                     Grid.Column="1"
                     VerticalAlignment="Center">
-            <Button IsDefault="True" Click="Accept_Click" Margin="0,0,10,0" Content="{x:Static res:UIResources.OK}" Width="100" Height="40"/>
+            <Button x:Name="acceptButton" IsDefault="True" Click="Accept_Click" Margin="0,0,10,0" Content="{x:Static res:UIResources.OK}" Width="100" Height="40"/>
             <Button IsCancel="True" Margin="10,0,0,0" Width="100" Height="40" Content="{x:Static res:UIResources.Cancel}"/>
         </StackPanel>
     </Grid>

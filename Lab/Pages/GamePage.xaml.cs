@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Lab.Pages
 {
     /// <summary>
-    /// Interaction logic for InfoPage.xaml
+    /// Логика взаимодействия для GamePage.xaml
     /// </summary>
-    public partial class InfoPage : Page
+    public partial class GamePage : Page
     {
-        public InfoPage()
+        public GamePage()
         {
             InitializeComponent();
         }

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Windows.Input;
 using System.Windows.Controls.Primitives;
 using System;
+using Lab.Game;
 
 namespace Lab
 {
@@ -17,7 +18,7 @@ namespace Lab
         {
             InitializeComponent();
 
-            Loaded += MainWindow_Loaded;
+            //Loaded += MainWindow_Loaded;
         }
 
         private void BG_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -47,16 +48,40 @@ namespace Lab
             Popup.IsOpen = false;
         }
 
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private void btnGame_Click(object sender, RoutedEventArgs e)
         {
-            // гарантируем, что база данных создана
-            db.Database.Migrate();
-            // загружаем данные из БД
-            db.Employees.Load();
-            // и устанавливаем данные в качестве контекста
-            DataContext = db.Employees.Local.ToObservableCollection();
-
-            //employeeList.DataContext = DataContext;
+            fContainer.Navigate(new System.Uri("Pages/GamePage.xaml", UriKind.RelativeOrAbsolute));
+            GameWindow gmWindow = new GameWindow();
+            gmWindow.ShowDialog();
         }
+
+        private void btnGame_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (Tg_Btn.IsChecked == false)
+            {
+                Popup.PlacementTarget = btnGame;
+                Popup.Placement = PlacementMode.Right;
+                Popup.IsOpen = true;
+                Header.PopupText.Text = "Bored";
+            }
+        }
+
+        private void btnGame_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Popup.Visibility = Visibility.Collapsed;
+            Popup.IsOpen = false;
+        }
+
+        //private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    // гарантируем, что база данных создана
+        //    db.Database.Migrate();
+        //    // загружаем данные из БД
+        //    db.Employees.Load();
+        //    // и устанавливаем данные в качестве контекста
+        //    DataContext = db.Employees.Local.ToObservableCollection();
+
+        //    //employeeList.DataContext = DataContext;
+        //}
     }
 }
