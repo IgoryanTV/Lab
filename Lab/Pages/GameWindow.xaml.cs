@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,6 +17,8 @@ namespace Lab.Game
         // List for add 2 sound wav
         List<System.Media.SoundPlayer> soundList=new List<System.Media.SoundPlayer>();
         DispatcherTimer timer;
+        DispatcherTimer timer2;
+        Stopwatch stopWatch;
         Random shapeRandom;
         private int rowCount = 0;
         private int columnCount = 0;
@@ -148,6 +151,10 @@ namespace Lab.Game
             KeyDown += MainWindow_KeyDown;
             // init timer
             timer = new DispatcherTimer();
+            timer2 = new();
+            stopWatch = new Stopwatch();
+            timer2.Interval = new(0,0,1);
+            timer2.Tick += Timer2_Tick;
             timer.Interval = new TimeSpan(0, 0, 0, 0, gameSpeed); // 700 millisecond
             timer.Tick += Timer_Tick;
             tetrisGridColumn = tetrisGrid.ColumnDefinitions.Count;
@@ -159,6 +166,13 @@ namespace Lab.Game
             // Add the 2 wav sound in list
             soundList.Add(new System.Media.SoundPlayer(Lab.Properties.Resources.collided));
             soundList.Add(new System.Media.SoundPlayer(Lab.Properties.Resources.deleteLine));
+        }
+
+        void Timer2_Tick(object sender, EventArgs e)
+        {
+            var time = stopWatch.Elapsed;
+
+            TimerText.Content = time.ToString(@"mm\:ss");
         }
             
         // Key event method for moving shape down,rigth,left and rotation
@@ -244,6 +258,7 @@ namespace Lab.Game
         {
             downPos++;
             moveShape();
+
             if (gameSpeedCounter >= levelScale)
             {          
                 if (gameSpeed >= 50)
@@ -275,17 +290,21 @@ namespace Lab.Game
                 isGameOver = false;
             }
             if(!timer.IsEnabled)
-             {
-               if (!gameActive) { scoreTxt.Text = "0"; leftPos = 3; addShape(currentShapeNumber,leftPos); }
-               nextTxt.Visibility = levelTxt.Visibility = Visibility.Visible;
-               levelTxt.Text = "Level: " + gameLevel.ToString();
-               timer.Start();
-               startStopBtn.Content = "Stop Game";
-               gameActive = true;
-             }
+            {
+                if (!gameActive) { scoreTxt.Text = "Score: 0"; leftPos = 3; addShape(currentShapeNumber, leftPos); }
+                nextTxt.Visibility = levelTxt.Visibility = Visibility.Visible;
+                levelTxt.Text = "Level: " + gameLevel.ToString();
+                timer.Start();
+                timer2.Start();
+                stopWatch.Start();
+                startStopBtn.Content = "Stop Game";
+                gameActive = true;
+            }
             else
             {
                 timer.Stop();
+                timer2.Stop();
+                stopWatch.Stop();
                 startStopBtn.Content = "Start Game";
             }
         }
@@ -481,6 +500,8 @@ namespace Lab.Game
             checkComplete();
             reset();
             timer.Start();
+            timer2.Start();
+            stopWatch.Start();
          
         }
         // Method for check if complete line
@@ -512,7 +533,7 @@ namespace Lab.Game
                 {
                     playSound(1);
                     deleteLine(row);
-                    scoreTxt.Text = getScore().ToString();
+                    scoreTxt.Text = "Score: " + getScore().ToString();
                     checkComplete();
                 }
             }
@@ -653,7 +674,16 @@ namespace Lab.Game
          soundList[index].Play();
         }
 
-    
+        private void closeWindowBTN_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        }
     }
 
     
