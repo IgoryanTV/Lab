@@ -16,18 +16,19 @@
         </Grid.RowDefinitions>
         <DataGrid x:Name="employeeList" ItemsSource="{Binding}" 
                   ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                  ScrollViewer.HorizontalScrollBarVisibility="Visible" 
                   ScrollViewer.CanContentScroll="True"  
-                  AutoGenerateColumns="False" 
-                  EnableRowVirtualization="False" IsReadOnly="True" RowHeight="20">
+                  AutoGenerateColumns="False" IsReadOnly="True" RowHeight="25" ColumnWidth="1*"
+                  Background="{DynamicResource PrimaryBackgroundColor}"
+                  Style="{DynamicResource DataGridStyle1}">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Id">
+                <DataGridTemplateColumn Header="Id" Width="20">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Id}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                
                 <DataGridTemplateColumn Header="Фамилия">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -35,6 +36,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                
                 <DataGridTemplateColumn Header="Имя">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -42,6 +44,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                
                 <DataGridTemplateColumn Header="Отчество">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -49,6 +52,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                
                 <DataGridTemplateColumn Header="Дата рождения">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -56,6 +60,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                
                 <DataGridTemplateColumn Header="Пол">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -63,27 +68,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Возраст">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Age}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Семейное положение">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding FamilyStatus}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Имеет детей?">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding HasChildren}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+
                 <DataGridTemplateColumn Header="Должность">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -91,21 +76,25 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Ученая степень">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Degree}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Операции">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
             </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="20,10">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Имеет детей: "/>
+                            <TextBlock Text="{Binding HasChildren}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Семейное положение: "/>
+                            <TextBlock Text="{Binding FamilyStatus}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Ученая степень: "/>
+                            <TextBlock Text="{Binding Degree}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
         </DataGrid>
 
         <Grid Grid.Row="1">
@@ -114,9 +103,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="Edit" Content="{x:Static res:UIResources.Edit}" Click="Edit_Click" Width="100" Height="40"/>
-            <Button x:Name="Delete" Content="{x:Static res:UIResources.Delete}" Click="Delete_Click" Grid.Column="1" Width="100" Height="40"/>
-            <Button x:Name="Add" Content="{x:Static res:UIResources.Add}" Click="Add_Click" Grid.Column="2" Width="100" Height="40"/>
+            <Button Style="{DynamicResource ButtonRoundStyle}" x:Name="Edit" Content="{x:Static res:UIResources.Edit}" Grid.Column="1" Click="Edit_Click" Width="100" Height="40"/>
+            <Button Style="{DynamicResource ButtonRoundStyle}" x:Name="Add" Content="{x:Static res:UIResources.Add}" Click="Add_Click" Grid.Column="0" Width="100" Height="40"/>
+            <Button Style="{DynamicResource ButtonDeleteRoundStyle}" x:Name="Delete" Content="{x:Static res:UIResources.Delete}" Click="Delete_Click" Grid.Column="2" Width="100" Height="40"/>
         </Grid>
     </Grid>
 </Page>

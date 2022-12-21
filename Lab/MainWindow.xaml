@@ -9,8 +9,8 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource PrimaryBackgroundColor}"
-        Title="MainWindow" Height="600" Width="1000">
-    <Border Background="{DynamicResource ThirdBackgroundColor}"
+        Title="MainWindow" Height="600" Width="1000" Foreground="White">
+    <Border Background="{DynamicResource PrimaryBackgroundColor}"
             CornerRadius="8">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -18,12 +18,15 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Border Grid.Column="0"
-                    Background="{DynamicResource SecundaryBackgroundColor}"
+                    Background="{DynamicResource SecondaryBackgroundColor}"
                     CornerRadius="8 0 0 8">
                 <Grid x:Name="GridNav" Width="60">
                     <StackPanel Grid.Row="1" Margin="-1 40 0 20">
                         <Button x:Name="btnHome" Style="{DynamicResource PopupButtonStyle}"  MouseEnter="btnHome_MouseEnter" MouseLeave="btnHome_MouseLeave" Click="btnHome_Click">
                             <controls:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource home}" IconWidth="16" Text="Home" VerticalAlignment="Center"/>
+                        </Button>
+                        <Button x:Name="btnGame" Style="{DynamicResource PopupButtonStyle}"  MouseEnter="btnGame_MouseEnter" MouseLeave="btnGame_MouseLeave" Click="btnGame_Click">
+                            <controls:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource bored}" IconWidth="16" Text="Bored" VerticalAlignment="Center"/>
                         </Button>
                     </StackPanel>
 
